@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
+import 'package:quitandavirtual/src/config/custom_colors.dart';
 
 class AppNameWidget extends StatelessWidget {
   final Color? greenTitleColor;

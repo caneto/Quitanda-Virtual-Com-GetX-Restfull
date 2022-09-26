@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
-import 'package:quitandavirtual/tabs/cart_tab.dart';
-import 'package:quitandavirtual/tabs/home_tab.dart';
-import 'package:quitandavirtual/tabs/orders_tab.dart';
-import 'package:quitandavirtual/tabs/profile_tab.dart';
+import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/pages/cart/cart_tab.dart';
+import 'package:quitandavirtual/src/pages/home/home_tab.dart';
+import 'package:quitandavirtual/src/pages/orders/orders_tab.dart';
+import 'package:quitandavirtual/src/pages/profile/profile_tab.dart';
+
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             label: 'Home'
@@ -62,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )
 
         ],
-      ));
+      ),
+    );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/auth/signin_screen.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
-import 'package:quitandavirtual/ui/splash_screen.dart';
+import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/pages/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
