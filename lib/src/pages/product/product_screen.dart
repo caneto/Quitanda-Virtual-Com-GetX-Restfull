@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/components/quantity_widget.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
-import 'package:quitandavirtual/models/item_model.dart';
-import 'package:quitandavirtual/utils/utils_services.dart';
+import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/models/item_model.dart';
+import 'package:quitandavirtual/src/pages/components_widget/quantity_widget.dart';
+import 'package:quitandavirtual/src/utils/utils_services.dart';
 
 class ProductScreen extends StatefulWidget {
   final ItemModel item;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/components/custom_text_field.dart';
-import 'package:quitandavirtual/config/app_data.dart' as appData;
+import 'package:quitandavirtual/src/config/app_data.dart' as appData;
+import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({Key? key}) : super(key: key);

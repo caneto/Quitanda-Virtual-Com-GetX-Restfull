@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/components/payment_dialog.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
-import 'package:quitandavirtual/models/cart_item_model.dart';
-import 'package:quitandavirtual/tiles/cart_tile.dart';
-import 'package:quitandavirtual/utils/utils_services.dart';
-import 'package:quitandavirtual/config/app_data.dart' as appData;
+import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/models/cart_item_model.dart';
+import 'package:quitandavirtual/src/pages/cart/components/cart_tile.dart';
+import 'package:quitandavirtual/src/pages/components_widget/payment_dialog.dart';
+import 'package:quitandavirtual/src/utils/utils_services.dart';
+import 'package:quitandavirtual/src/config/app_data.dart' as appData;
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:quitandavirtual/models/cart_item_model.dart';
+import 'package:quitandavirtual/src/models/cart_item_model.dart';
 
 class OrderModel {
   String id;

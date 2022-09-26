@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:quitandavirtual/models/order_model.dart';
-import 'package:quitandavirtual/utils/utils_services.dart';
+import 'package:quitandavirtual/src/models/order_model.dart';
+import 'package:quitandavirtual/src/utils/utils_services.dart';
 
 class PaymentDialog extends StatelessWidget {
   final OrderModel order;

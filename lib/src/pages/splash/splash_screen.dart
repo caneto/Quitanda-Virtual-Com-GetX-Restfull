@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quitandavirtual/auth/signin_screen.dart';
-import 'package:quitandavirtual/components/app_name_widget.dart';
-import 'package:quitandavirtual/config/custom_colors.dart';
+import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/pages/auth/signin_screen.dart';
+import 'package:quitandavirtual/src/pages/components_widget/app_name_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
