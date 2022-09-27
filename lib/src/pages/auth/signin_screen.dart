@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandavirtual/src/pages/auth/signup_screen.dart';
 import 'package:quitandavirtual/src/pages/base/home_screen.dart';
 import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
@@ -18,7 +19,9 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
@@ -28,50 +31,50 @@ class SignInScreen extends StatelessWidget {
           width: size.width,
           child: Column(children: [
             Expanded(
-             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text.rich(
-                  TextSpan(
-                      style: const TextStyle(
-                        fontSize: 40,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                          style: const TextStyle(
+                            fontSize: 40,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: "Quitanda",
+                                style: TextStyle(
+                                  color: CustomColors.customWhiteColor,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                                text: "virtual",
+                                style: TextStyle(
+                                  color: CustomColors.customContrastColor,
+                                ))
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 30,
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          fontSize: 25,
+                        ),
+                        child: AnimatedTextKit(
+                          pause: Duration.zero,
+                          repeatForever: true,
+                          animatedTexts: [
+                            FadeAnimatedText('Frutas'),
+                            FadeAnimatedText('Verduras'),
+                            FadeAnimatedText('Legumes'),
+                            FadeAnimatedText('Carnes'),
+                            FadeAnimatedText('Cereais'),
+                            FadeAnimatedText('Laticineos'),
+                          ],
+                        ),
                       ),
-                      children: [
-                        TextSpan(
-                            text: "Quitanda",
-                            style: TextStyle(
-                              color: CustomColors.customWhiteColor,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        TextSpan(
-                            text: "virtual",
-                            style: TextStyle(
-                              color: CustomColors.customContrastColor,
-                            ))
-                      ]),
-                ),
-                SizedBox(
-                  height: 30,
-                  child: DefaultTextStyle(
-                    style: const TextStyle(
-                      fontSize: 25,
-                    ),
-                    child: AnimatedTextKit(
-                      pause: Duration.zero,
-                      repeatForever: true,
-                      animatedTexts: [
-                        FadeAnimatedText('Frutas'),
-                        FadeAnimatedText('Verduras'),
-                        FadeAnimatedText('Legumes'),
-                        FadeAnimatedText('Carnes'),
-                        FadeAnimatedText('Cereais'),
-                        FadeAnimatedText('Laticineos'),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            )),
+                    )
+                  ],
+                )),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
               decoration: const BoxDecoration(
@@ -89,10 +92,10 @@ class SignInScreen extends StatelessWidget {
                       icon: Icons.mail,
                       label: "Email",
                       validator: (email) {
-                        if(email == null || email.isEmpty) {
+                        if (email == null || email.isEmpty) {
                           return 'Digite seu email';
                         }
-                        if(!email.isEmail) {
+                        if (!email.isEmail) {
                           return 'Digite um email valido!';
                         }
                         return null;
@@ -104,10 +107,10 @@ class SignInScreen extends StatelessWidget {
                       label: "Senha",
                       isSecret: true,
                       validator: (password) {
-                        if(password == null || password.isEmpty) {
+                        if (password == null || password.isEmpty) {
                           return 'Digite sua senha';
                         }
-                        if(password.length < 7) {
+                        if (password.length < 7) {
                           return 'Digite uma senha com pelo menos 7 caracteres';
                         }
                         return null;
@@ -115,30 +118,41 @@ class SignInScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 50,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                          onPressed: () {
-                            if(_formKey.currentState!.validate()) {
+                      child: GetX<AuthController>(
+                        builder: (authController) {
+                          return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                              ),
+                              onPressed:  authController.isLoading.value ? null :
+                                () {
 
-                              String email = emailController.text;
-                              String senha = passwordController.text;
-                              print('Email: $email - Senha: $senha');
+                                  FocusScope.of(context).unfocus();
 
-                            } else {
-                              print('Campos não validos');
-                            }
-                            //Get.toNamed(PagesRoutes.homeRoute);
-                          },
-                          child: const Text(
-                            "Entrar",
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          )),
+                                  if (_formKey.currentState!.validate()) {
+                                    String email = emailController.text;
+                                    String password = passwordController.text;
+
+                                    authController.signIn(email: email, password: password);
+
+                                    //print('Email: $email - Senha: $senha');
+                                  } else {
+                                    print('Campos não validos');
+                                  }
+                                //Get.toNamed(PagesRoutes.homeRoute);
+                              },
+                              child: authController.isLoading.value
+                                ? const CircularProgressIndicator()
+                                : const Text(
+                                "Entrar",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ));
+                        },
+                      ),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
@@ -182,7 +196,8 @@ class SignInScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            side: const BorderSide(width: 2, color: Colors.green)),
+                            side: const BorderSide(
+                                width: 2, color: Colors.green)),
                         onPressed: () {
                           Get.toNamed(PagesRoutes.signUpRoute);
                         },

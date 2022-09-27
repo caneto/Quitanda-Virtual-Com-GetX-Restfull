@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
-import 'package:quitandavirtual/src/pages/splash/splash_screen.dart';
+import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandavirtual/src/pages_route/app_pages.dart';
 
 void main() {
+  Get.put(AuthController());
+
   runApp(const MyApp());
 }
 
