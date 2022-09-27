@@ -12,6 +12,10 @@ class SignInScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
+  //Controller de campos
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -81,6 +85,7 @@ class SignInScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CustomTextField(
+                      controller: emailController,
                       icon: Icons.mail,
                       label: "Email",
                       validator: (email) {
@@ -94,6 +99,7 @@ class SignInScreen extends StatelessWidget {
                       },
                     ),
                     CustomTextField(
+                      controller: passwordController,
                       icon: Icons.lock,
                       label: "Senha",
                       isSecret: true,
@@ -116,7 +122,16 @@ class SignInScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.toNamed(PagesRoutes.homeRoute);
+                            if(_formKey.currentState!.validate()) {
+
+                              String email = emailController.text;
+                              String senha = passwordController.text;
+                              print('Email: $email - Senha: $senha');
+
+                            } else {
+                              print('Campos não validos');
+                            }
+                            //Get.toNamed(PagesRoutes.homeRoute);
                           },
                           child: const Text(
                             "Entrar",
@@ -169,8 +184,7 @@ class SignInScreen extends StatelessWidget {
                             ),
                             side: const BorderSide(width: 2, color: Colors.green)),
                         onPressed: () {
-                          _formKey.currentState!.validate();
-                          //Get.toNamed(PagesRoutes.signUpRoute);
+                          Get.toNamed(PagesRoutes.signUpRoute);
                         },
                         child: const Text(
                           "Criar conta",
