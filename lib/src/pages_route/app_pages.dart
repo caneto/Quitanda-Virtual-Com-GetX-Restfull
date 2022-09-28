@@ -1,8 +1,8 @@
 
 
 import 'package:get/get.dart';
-import 'package:quitandavirtual/src/pages/auth/signin_screen.dart';
-import 'package:quitandavirtual/src/pages/auth/signup_screen.dart';
+import 'package:quitandavirtual/src/pages/auth/view/signin_screen.dart';
+import 'package:quitandavirtual/src/pages/auth/view/signup_screen.dart';
 import 'package:quitandavirtual/src/pages/base/home_screen.dart';
 import 'package:quitandavirtual/src/pages/splash/splash_screen.dart';
 

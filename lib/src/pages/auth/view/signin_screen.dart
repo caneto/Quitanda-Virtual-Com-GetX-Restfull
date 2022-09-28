@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
 import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
-import 'package:quitandavirtual/src/pages/auth/signup_screen.dart';
-import 'package:quitandavirtual/src/pages/base/home_screen.dart';
 import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
 import 'package:quitandavirtual/src/pages_route/app_pages.dart';
 
