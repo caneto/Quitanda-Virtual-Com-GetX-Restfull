@@ -5,7 +5,7 @@ class AuthRepository {
   final HttpManager _httpManager = HttpManager();
 
   Future signIn({required String email, required String password}) async {
-    _httpManager.restRequest(
+    final result = await _httpManager.restRequest(
       url: Endpoints.signIn,
       method: httpMethods.put,
       body: {
@@ -13,5 +13,11 @@ class AuthRepository {
         "password": password
       }
     );
+
+    if(result['result']) {
+      print('Signin funcionou');
+    } else {
+      print('Signin não funcionou');
+    }
   }
 }
