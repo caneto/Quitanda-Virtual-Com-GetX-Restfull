@@ -1,9 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:quitandavirtual/src/constants/endpoints.dart';
-import 'package:quitandavirtual/src/services/http_manager.dart';
 
 class AuthRepository {
-  final HttpManager _httpManager = HttpManager();
 
   Future signIn({required String username, required String password}) async {
 

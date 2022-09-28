@@ -1,16 +1,22 @@
 class UserModel {
-  String name;
+  String id;
+  String username;
+  String fullname;
   String email;
-  String celular;
+  String phone;
   String cpf;
-  String senha;
+  String password;
+  String token;
 
   UserModel({
-    required this.name,
+    required this.id,
+    required this.username,
+    required this.fullname,
     required this.email,
-    required this.celular,
+    required this.phone,
     required this.cpf,
-    required this.senha
+    required this.password,
+    required this.token,
   });
 
 

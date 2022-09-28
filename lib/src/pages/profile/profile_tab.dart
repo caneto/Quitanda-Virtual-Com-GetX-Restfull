@@ -33,15 +33,21 @@ class _ProfileTabState extends State<ProfileTab> {
             readOnly: true,
           ),
           CustomTextField(
+            icon: Icons.person_outline,
+            label: 'Usuário',
+            initialValue: appData.user.username,
+            readOnly: true,
+          ),
+          CustomTextField(
             icon: Icons.person,
             label: 'Nome',
-            initialValue: appData.user.name,
+            initialValue: appData.user.fullname,
             readOnly: true,
           ),
           CustomTextField(
             icon: Icons.phone,
             label: 'Celular',
-            initialValue: appData.user.celular,
+            initialValue: appData.user.phone,
             readOnly: true,
           ),
           CustomTextField(
