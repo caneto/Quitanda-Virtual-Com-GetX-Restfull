@@ -7,12 +7,12 @@ class AuthController extends GetxController {
   final authRepository = AuthRepository();
 
   Future<void> signIn({
-    required String email,
+    required String username,
     required String password,
   }) async {
     isLoading.value = true;
 
-    await authRepository.signIn(email: email, password: password);
+    await authRepository.signIn(username: username, password: password);
 
     isLoading.value = false;
   }

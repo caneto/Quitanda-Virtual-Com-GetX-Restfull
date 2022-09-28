@@ -12,7 +12,7 @@ class SignInScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   //Controller de campos
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -86,15 +86,15 @@ class SignInScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CustomTextField(
-                      controller: emailController,
-                      icon: Icons.mail,
-                      label: "Email",
-                      validator: (email) {
-                        if (email == null || email.isEmpty) {
-                          return 'Digite seu email';
+                      controller: usernameController,
+                      icon: Icons.person,
+                      label: "Usuário",
+                      validator: (username) {
+                        if (username == null || username.isEmpty) {
+                          return 'Digite seu nome de usuário';
                         }
-                        if (!email.isEmail) {
-                          return 'Digite um email valido!';
+                        if (!username.isAlphabetOnly) {
+                          return 'Digite um nome de usuário valido!';
                         }
                         return null;
                       },
@@ -130,10 +130,10 @@ class SignInScreen extends StatelessWidget {
                                   FocusScope.of(context).unfocus();
 
                                   if (_formKey.currentState!.validate()) {
-                                    String email = emailController.text;
+                                    String username = usernameController.text;
                                     String password = passwordController.text;
 
-                                    authController.signIn(email: email, password: password);
+                                    authController.signIn(username: username, password: password);
 
                                     //print('Email: $email - Senha: $senha');
                                   } else {
