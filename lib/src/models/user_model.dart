@@ -1,23 +1,24 @@
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
 class UserModel {
-  String id;
-  String username;
-  String fullname;
-  String email;
-  String phone;
-  String cpf;
-  String password;
-  String token;
+  String? id;
+  String? username;
+  String? fullname;
+  String? email;
+  String? phone;
+  String? cpf;
+  String? password;
+  String? token;
 
   UserModel({
-    required this.id,
-    required this.username,
-    required this.fullname,
-    required this.email,
-    required this.phone,
-    required this.cpf,
-    required this.password,
-    required this.token,
+    this.id,
+    this.username,
+    this.fullname,
+    this.email,
+    this.phone,
+    this.cpf,
+    this.password,
+    this.token,
   });
-
 
 }

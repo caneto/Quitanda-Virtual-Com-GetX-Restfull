@@ -8,7 +8,7 @@ class Parseinit {
       Setings.aplicationId,
       Setings.baseUrl,
       clientKey: Setings.clientId,
-      debug: true,
+      debug: false,
       autoSendSessionId: true
     );
   }
