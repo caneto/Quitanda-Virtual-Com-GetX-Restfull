@@ -5,6 +5,7 @@ import 'package:quitandavirtual/src/config/custom_colors.dart';
 import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
 import 'package:quitandavirtual/src/pages_route/app_pages.dart';
+import 'package:quitandavirtual/src/services/validators.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class SignInScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   //Controller de campos
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -86,33 +87,17 @@ class SignInScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CustomTextField(
-                      controller: usernameController,
-                      icon: Icons.person,
-                      label: "Usuário",
-                      validator: (username) {
-                        if (username == null || username.isEmpty) {
-                          return 'Digite seu nome de usuário';
-                        }
-                        if (!username.isAlphabetOnly) {
-                          return 'Digite um nome de usuário valido!';
-                        }
-                        return null;
-                      },
+                      controller: emailController,
+                      icon: Icons.email,
+                      label: "Email",
+                      validator: emailValidator,
                     ),
                     CustomTextField(
                       controller: passwordController,
                       icon: Icons.lock,
                       label: "Senha",
                       isSecret: true,
-                      validator: (password) {
-                        if (password == null || password.isEmpty) {
-                          return 'Digite sua senha';
-                        }
-                        if (password.length < 7) {
-                          return 'Digite uma senha com pelo menos 7 caracteres';
-                        }
-                        return null;
-                      },
+                      validator: passwordValidator,
                     ),
                     SizedBox(
                       height: 50,
@@ -130,10 +115,10 @@ class SignInScreen extends StatelessWidget {
                                   FocusScope.of(context).unfocus();
 
                                   if (_formKey.currentState!.validate()) {
-                                    String username = usernameController.text;
+                                    String email = emailController.text;
                                     String password = passwordController.text;
 
-                                    authController.signIn(username: username, password: password);
+                                    authController.signIn(email: email, password: password);
 
                                     //print('Email: $email - Senha: $senha');
                                   } else {
