@@ -68,7 +68,7 @@ class AuthController extends GetxController {
       success: (user) {
         this.user = user;
 
-        saveTokenAndProcedToken();
+        saveTokenAndProceedToken();
       },
       error: (message) {
         utilsServices.showToast(
