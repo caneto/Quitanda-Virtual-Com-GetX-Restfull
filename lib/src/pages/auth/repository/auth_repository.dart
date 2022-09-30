@@ -3,18 +3,21 @@ import 'package:quitandavirtual/src/constants/endpoints.dart';
 import 'package:quitandavirtual/src/models/user_model.dart';
 import 'package:quitandavirtual/src/pages/auth/result/auth_result.dart';
 import 'package:quitandavirtual/src/services/http_manager.dart';
-import 'package:quitandavirtual/src/pages/auth/repository/auth_errors.dart' as authErrors;
+import 'package:quitandavirtual/src/pages/auth/repository/auth_errors.dart'
+    as authErrors;
 
 class AuthRepository {
   final HttpManager _httpManager = HttpManager();
 
-  AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
-    if (result['result'] != null) {
-      final user = UserModel.fromJson(result['result']);
-      return AuthResult.success(user);
-    } else {
-      return AuthResult.error(authErrors.authErrorsString(result['error']));
-    }
+  Future<AuthResult> validateToken(String token) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.validateToken,
+      method: HttpMethods.post,
+      headers: {
+        'X-Parse-Session-Token':token,
+      }
+    );
+    return handleUserOrError(result);
   }
 
   Future<AuthResult> signIn(
@@ -31,9 +34,19 @@ class AuthRepository {
     return handleUserOrError(result);
   }
 
+  AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
+    if (result['result'] != null) {
+      final user = UserModel.fromJson(result['result']);
+      return AuthResult.success(user);
+    } else {
+      return AuthResult.error(authErrors.authErrorsString(result['error']));
+    }
+  }
+
   UserModel userModel = UserModel();
 
-  Future signInParse({required String username, required String password}) async {
+  Future signInParse(
+      {required String username, required String password}) async {
     final user = ParseUser(username, password, null);
     var response = await user.login();
 
@@ -61,6 +74,5 @@ class AuthRepository {
       print(response.error);
       //showError(response.error!.message);
     }
-
   }
 }
