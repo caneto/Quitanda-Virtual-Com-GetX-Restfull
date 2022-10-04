@@ -20,6 +20,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
       body: SingleChildScrollView(
@@ -60,45 +62,53 @@ class SignUpScreen extends StatelessWidget {
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(45),
                         )),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const CustomTextField(
-                            icon: Icons.mail,
-                            label: "Email",
-                          ),
-                          const CustomTextField(
-                            icon: Icons.lock,
-                            label: "Senha",
-                            isSecret: true,
-                          ),
-                          const CustomTextField(
-                            icon: Icons.person,
-                            label: "Nome",
-                          ),
-                          CustomTextField(
-                            icon: Icons.phone,
-                            label: "Celular",
-                            inputFormatter: [phoneFormater],
-                          ),
-                          CustomTextField(
-                            icon: Icons.file_copy,
-                            label: "CPF",
-                            inputFormatter: [cpfformater],
-                          ),
-                          SizedBox(
-                            height: 50.0,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18)
-                                )
-                              ),
-                              onPressed: () {},
-                              child: const Text("Cadastrar usuário", style: TextStyle(fontSize: 18),),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const CustomTextField(
+                              icon: Icons.mail,
+                              label: "Email",
+                              textInputType: TextInputType.emailAddress,
                             ),
-                          ),
-                        ]),
+                            const CustomTextField(
+                              icon: Icons.lock,
+                              label: "Senha",
+                              isSecret: true,
+                            ),
+                            const CustomTextField(
+                              icon: Icons.person,
+                              label: "Nome",
+                            ),
+                            CustomTextField(
+                              icon: Icons.phone,
+                              label: "Celular",
+                              inputFormatter: [phoneFormater],
+                              textInputType: TextInputType.phone,
+                            ),
+                            CustomTextField(
+                              icon: Icons.file_copy,
+                              label: "CPF",
+                              inputFormatter: [cpfformater],
+                              textInputType: TextInputType.number,
+                            ),
+                            SizedBox(
+                              height: 50.0,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18)
+                                  )
+                                ),
+                                onPressed: () {
+                                  _formKey.currentState!.validate();
+                                },
+                                child: const Text("Cadastrar usuário", style: TextStyle(fontSize: 18),),
+                              ),
+                            ),
+                          ]),
+                    ),
                   ),
                 ],
               ),

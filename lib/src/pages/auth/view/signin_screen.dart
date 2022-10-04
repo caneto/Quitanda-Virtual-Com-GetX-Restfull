@@ -109,7 +109,7 @@ class SignInScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(18),
                                 ),
                               ),
-                              onPressed:  authController.isLoading.value ? null :
+                              onPressed: authController.isLoading.value ? null :
                                 () {
 
                                   FocusScope.of(context).unfocus();
