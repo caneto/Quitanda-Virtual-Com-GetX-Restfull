@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
+import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
 import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -21,6 +23,7 @@ class SignUpScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     final _formKey = GlobalKey<FormState>();
+    final authController = Get.find<AuthController>();
 
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
@@ -67,31 +70,46 @@ class SignUpScreen extends StatelessWidget {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const CustomTextField(
+                            CustomTextField(
                               icon: Icons.mail,
                               label: "Email",
                               textInputType: TextInputType.emailAddress,
+                              onSave: (value) {
+                                authController.user.email = value;
+                              },
                             ),
-                            const CustomTextField(
+                            CustomTextField(
                               icon: Icons.lock,
                               label: "Senha",
                               isSecret: true,
+                              onSave: (value) {
+                                authController.user.password = value;
+                              },
                             ),
-                            const CustomTextField(
+                            CustomTextField(
                               icon: Icons.person,
                               label: "Nome",
+                              onSave: (value) {
+                                authController.user.name = value;
+                              },
                             ),
                             CustomTextField(
                               icon: Icons.phone,
                               label: "Celular",
                               inputFormatter: [phoneFormater],
                               textInputType: TextInputType.phone,
+                              onSave: (value) {
+                                authController.user.phone = value;
+                              },
                             ),
                             CustomTextField(
                               icon: Icons.file_copy,
                               label: "CPF",
                               inputFormatter: [cpfformater],
                               textInputType: TextInputType.number,
+                              onSave: (value) {
+                                authController.user.cpf = value;
+                              },
                             ),
                             SizedBox(
                               height: 50.0,
@@ -102,7 +120,12 @@ class SignUpScreen extends StatelessWidget {
                                   )
                                 ),
                                 onPressed: () {
-                                  _formKey.currentState!.validate();
+                                  if(_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                    //authController.signUp();
+
+                                    print(authController.user); 
+                                  }
                                 },
                                 child: const Text("Cadastrar usuário", style: TextStyle(fontSize: 18),),
                               ),

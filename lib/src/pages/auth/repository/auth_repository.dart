@@ -34,6 +34,16 @@ class AuthRepository {
     return handleUserOrError(result);
   }
 
+  Future<AuthResult> signUp(UserModel user) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.signup,
+      method: HttpMethods.post,
+      body: user.toJson(),
+    );
+
+    return handleUserOrError(result);
+  }
+
   AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
     if (result['result'] != null) {
       final user = UserModel.fromJson(result['result']);
