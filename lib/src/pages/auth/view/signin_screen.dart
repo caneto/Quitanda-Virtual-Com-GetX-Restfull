@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
 import 'package:quitandavirtual/src/pages/auth/controller/auth_controller.dart';
+import 'package:quitandavirtual/src/pages/auth/view/components/forgot_password_dialog.dart';
 import 'package:quitandavirtual/src/pages/components_widget/custom_text_field.dart';
 import 'package:quitandavirtual/src/pages_route/app_pages.dart';
 import 'package:quitandavirtual/src/services/validators.dart';
@@ -18,9 +19,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
@@ -31,49 +30,49 @@ class SignInScreen extends StatelessWidget {
           child: Column(children: [
             Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                          style: const TextStyle(
-                            fontSize: 40,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: "Quitanda",
-                                style: TextStyle(
-                                  color: CustomColors.customWhiteColor,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            TextSpan(
-                                text: "virtual",
-                                style: TextStyle(
-                                  color: CustomColors.customContrastColor,
-                                ))
-                          ]),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 25,
-                        ),
-                        child: AnimatedTextKit(
-                          pause: Duration.zero,
-                          repeatForever: true,
-                          animatedTexts: [
-                            FadeAnimatedText('Frutas'),
-                            FadeAnimatedText('Verduras'),
-                            FadeAnimatedText('Legumes'),
-                            FadeAnimatedText('Carnes'),
-                            FadeAnimatedText('Cereais'),
-                            FadeAnimatedText('Laticineos'),
-                          ],
-                        ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text.rich(
+                  TextSpan(
+                      style: const TextStyle(
+                        fontSize: 40,
                       ),
-                    )
-                  ],
-                )),
+                      children: [
+                        TextSpan(
+                            text: "Quitanda",
+                            style: TextStyle(
+                              color: CustomColors.customWhiteColor,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        TextSpan(
+                            text: "virtual",
+                            style: TextStyle(
+                              color: CustomColors.customContrastColor,
+                            ))
+                      ]),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 25,
+                    ),
+                    child: AnimatedTextKit(
+                      pause: Duration.zero,
+                      repeatForever: true,
+                      animatedTexts: [
+                        FadeAnimatedText('Frutas'),
+                        FadeAnimatedText('Verduras'),
+                        FadeAnimatedText('Legumes'),
+                        FadeAnimatedText('Carnes'),
+                        FadeAnimatedText('Cereais'),
+                        FadeAnimatedText('Laticineos'),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
               decoration: const BoxDecoration(
@@ -109,32 +108,44 @@ class SignInScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(18),
                                 ),
                               ),
-                              onPressed: authController.isLoading.value ? null :
-                                () {
-                                  FocusScope.of(context).unfocus();
+                              onPressed: authController.isLoading.value
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
 
-                                  if (_formKey.currentState!.validate()) {
-                                    String email = emailController.text;
-                                    String password = passwordController.text;
+                                      if (_formKey.currentState!.validate()) {
+                                        String email = emailController.text;
+                                        String password =
+                                            passwordController.text;
 
-                                    authController.signIn(email: email, password: password);
-                                  }
-                              },
+                                        authController.signIn(
+                                            email: email, password: password);
+                                      }
+                                    },
                               child: authController.isLoading.value
-                                ? const CircularProgressIndicator()
-                                : const Text(
-                                "Entrar",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ));
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      "Entrar",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ));
                         },
                       ),
                     ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return ForgotPasswordDialog(
+                                  email: emailController.text,
+                                );
+                              }
+                           );
+                        },
                         child: Text(
                           "Esqueceu a Senha?",
                           style: TextStyle(
