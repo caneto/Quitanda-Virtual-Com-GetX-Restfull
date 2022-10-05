@@ -68,69 +68,78 @@ class SignUpScreen extends StatelessWidget {
                     child: Form(
                       key: _formKey,
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            CustomTextField(
-                              icon: Icons.mail,
-                              label: "Email",
-                              textInputType: TextInputType.emailAddress,
-                              onSave: (value) {
-                                authController.user.email = value;
-                              },
-                            ),
-                            CustomTextField(
-                              icon: Icons.lock,
-                              label: "Senha",
-                              isSecret: true,
-                              onSave: (value) {
-                                authController.user.password = value;
-                              },
-                            ),
-                            CustomTextField(
-                              icon: Icons.person,
-                              label: "Nome",
-                              onSave: (value) {
-                                authController.user.name = value;
-                              },
-                            ),
-                            CustomTextField(
-                              icon: Icons.phone,
-                              label: "Celular",
-                              inputFormatter: [phoneFormater],
-                              textInputType: TextInputType.phone,
-                              onSave: (value) {
-                                authController.user.phone = value;
-                              },
-                            ),
-                            CustomTextField(
-                              icon: Icons.file_copy,
-                              label: "CPF",
-                              inputFormatter: [cpfformater],
-                              textInputType: TextInputType.number,
-                              onSave: (value) {
-                                authController.user.cpf = value;
-                              },
-                            ),
-                            SizedBox(
-                              height: 50.0,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        CustomTextField(
+                          icon: Icons.mail,
+                          label: "Email",
+                          textInputType: TextInputType.emailAddress,
+                          onSave: (value) {
+                            authController.user.email = value;
+                          },
+                        ),
+                        CustomTextField(
+                          icon: Icons.lock,
+                          label: "Senha",
+                          isSecret: true,
+                          onSave: (value) {
+                            authController.user.password = value;
+                          },
+                        ),
+                        CustomTextField(
+                          icon: Icons.person,
+                          label: "Nome",
+                          onSave: (value) {
+                            authController.user.name = value;
+                          },
+                        ),
+                        CustomTextField(
+                          icon: Icons.phone,
+                          label: "Celular",
+                          inputFormatter: [phoneFormater],
+                          textInputType: TextInputType.phone,
+                          onSave: (value) {
+                            authController.user.phone = value;
+                          },
+                        ),
+                        CustomTextField(
+                          icon: Icons.file_copy,
+                          label: "CPF",
+                          inputFormatter: [cpfformater],
+                          textInputType: TextInputType.number,
+                          onSave: (value) {
+                            authController.user.cpf = value;
+                          },
+                        ),
+                        SizedBox(
+                          height: 50.0,
+                          child: Obx((){
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18)
+                                      borderRadius: BorderRadius.circular(18)
                                   )
-                                ),
-                                onPressed: () {
-                                  if(_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    //authController.signUp();
-
-                                    print(authController.user); 
-                                  }
-                                },
-                                child: const Text("Cadastrar usuário", style: TextStyle(fontSize: 18),),
                               ),
-                            ),
-                          ]),
+                              onPressed: authController.isLoading.value ? null : () {
+                                FocusScope.of(context).unfocus();
+                                if(_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  authController.signUp();
+                                }
+                              },
+                              child: authController.isLoading.value
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                "Cadastrar usuário",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            );
+                          })
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

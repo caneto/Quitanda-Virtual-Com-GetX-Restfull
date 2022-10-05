@@ -111,7 +111,6 @@ class SignInScreen extends StatelessWidget {
                               ),
                               onPressed: authController.isLoading.value ? null :
                                 () {
-
                                   FocusScope.of(context).unfocus();
 
                                   if (_formKey.currentState!.validate()) {
@@ -119,12 +118,7 @@ class SignInScreen extends StatelessWidget {
                                     String password = passwordController.text;
 
                                     authController.signIn(email: email, password: password);
-
-                                    //print('Email: $email - Senha: $senha');
-                                  } else {
-                                    print('Campos não validos');
                                   }
-                                //Get.toNamed(PagesRoutes.homeRoute);
                               },
                               child: authController.isLoading.value
                                 ? const CircularProgressIndicator()
