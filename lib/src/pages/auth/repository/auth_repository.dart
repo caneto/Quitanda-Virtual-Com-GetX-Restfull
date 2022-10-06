@@ -11,12 +11,11 @@ class AuthRepository {
 
   Future<AuthResult> validateToken(String token) async {
     final result = await _httpManager.restRequest(
-      url: Endpoints.validateToken,
-      method: HttpMethods.post,
-      headers: {
-        'X-Parse-Session-Token':token,
-      }
-    );
+        url: Endpoints.validateToken,
+        method: HttpMethods.post,
+        headers: {
+          'X-Parse-Session-Token': token,
+        });
     return handleUserOrError(result);
   }
 
@@ -42,6 +41,14 @@ class AuthRepository {
     );
 
     return handleUserOrError(result);
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _httpManager.restRequest(
+      url: Endpoints.resetPassword,
+      method: HttpMethods.post,
+      body: {'email':email}
+    );
   }
 
   AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
