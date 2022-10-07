@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/pages/auth/view/signin_screen.dart';
 import 'package:quitandavirtual/src/pages/auth/view/signup_screen.dart';
+import 'package:quitandavirtual/src/pages/base/binding/home_binding.dart';
 import 'package:quitandavirtual/src/pages/base/home_screen.dart';
 import 'package:quitandavirtual/src/pages/splash/splash_screen.dart';
 
@@ -22,8 +23,11 @@ abstract class AppPages{
     ),
     GetPage(
         name: PagesRoutes.homeRoute,
-        page: () => HomeScreen()
-    )
+        page: () => HomeScreen(),
+        bindings: [
+          HomeBinding(),
+        ]
+    ),
   ];
 }
 
