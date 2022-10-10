@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:quitandavirtual/src/models/category_model.dart';
+import 'package:quitandavirtual/src/models/item_model.dart';
 import 'package:quitandavirtual/src/pages/home/repository/home_repository.dart';
 import 'package:quitandavirtual/src/pages/home/result/home_result.dart';
 import 'package:quitandavirtual/src/utils/utils_services.dart';
@@ -29,6 +30,15 @@ class HomeController extends GetxController {
     update();
   }
 
+  void selectCategory(CategoryModel category) {
+    currentCategory = category;
+    update();
+
+    //if (currentCategory!.items.isNotEmpty) return;
+
+    //getAllProducts();
+  }
+
   Future<void> getAllCategories() async {
     setLoading(true);
 
@@ -41,7 +51,7 @@ class HomeController extends GetxController {
 
         if (allCategories.isEmpty) return;
 
-        //selectCategory(allCategories.first);
+        selectCategory(allCategories.first);
       },
       error: (message) {
         utilsServices.showToast(
