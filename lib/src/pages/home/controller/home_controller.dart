@@ -28,6 +28,12 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
+    debounce(
+      searchTitle,
+          (_) => filterByTitle(),
+      time: const Duration(milliseconds: 600),
+    );
+
     getAllCategories();
   }
 
@@ -72,6 +78,41 @@ class HomeController extends GetxController {
         );
       },
     );
+  }
+
+  void filterByTitle() {
+    // Apagar todos os produtos das categorias
+    for (var category in allCategories) {
+      category.items.clear();
+      category.pagination = 0;
+    }
+
+    if (searchTitle.value.isEmpty) {
+      allCategories.removeAt(0);
+    } else {
+      CategoryModel? c = allCategories.firstWhereOrNull((cat) => cat.id == '');
+
+      if (c == null) {
+        // Criar uma nova categoria com todos
+        final allProductsCategory = CategoryModel(
+          title: 'Todos',
+          id: '',
+          items: [],
+          pagination: 0,
+        );
+
+        allCategories.insert(0, allProductsCategory);
+      } else {
+        c.items.clear();
+        c.pagination = 0;
+      }
+    }
+
+    currentCategory = allCategories.first;
+
+    update();
+
+    getAllProducts();
   }
 
   void loadMoreProducts() {
