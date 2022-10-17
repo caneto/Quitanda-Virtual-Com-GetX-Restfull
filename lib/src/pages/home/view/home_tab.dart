@@ -133,7 +133,7 @@ class _HomeTabState extends State<HomeTab> {
             GetBuilder<HomeController>(
               builder: (controller) {
                 return Expanded(
-                  child: true ? //!controller.isProductLoading ?
+                  child: !controller.isProductLoading ?
                     GridView.builder(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       physics: const BouncingScrollPhysics(),
@@ -144,10 +144,10 @@ class _HomeTabState extends State<HomeTab> {
                         childAspectRatio: 9 / 11.5,
                         //childAspectRatio:
                       ),
-                      itemCount: appData.items.length,
+                      itemCount: controller.allProducts.length,
                       itemBuilder: (_,index) {
                         return ItemTile(
-                            item: appData.items[index],
+                            item: controller.allProducts[index],
                             cartAnimationMethod: itemSelectedCartAnimations
                         );
                       },

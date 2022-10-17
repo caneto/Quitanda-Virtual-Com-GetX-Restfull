@@ -5,6 +5,8 @@ import 'package:quitandavirtual/src/pages/home/repository/home_repository.dart';
 import 'package:quitandavirtual/src/pages/home/result/home_result.dart';
 import 'package:quitandavirtual/src/utils/utils_services.dart';
 
+const int itemsPerPage = 6;
+
 class HomeController extends GetxController {
   final homeRespository = HomeRepository();
   final utilsServices = UtilsServices();
@@ -13,6 +15,9 @@ class HomeController extends GetxController {
   bool isProductLoading = true;
   List<CategoryModel> allCategories = [];
   CategoryModel? currentCategory;
+  List<ItemModel> get allProducts => currentCategory?.items ?? [];
+
+  RxString searchTitle = ''.obs;
 
   @override
   void onInit() {
@@ -34,17 +39,19 @@ class HomeController extends GetxController {
     currentCategory = category;
     update();
 
-    //if (currentCategory!.items.isNotEmpty) return;
+    if (currentCategory!.items.isNotEmpty) return;
 
-    //getAllProducts();
+    getAllProducts();
   }
 
   Future<void> getAllCategories() async {
     setLoading(true);
 
-    HomeResult<CategoryModel> homeResult = await homeRespository.getAllCategories();
+    HomeResult<CategoryModel> homeResult =
+    await homeRespository.getAllCategories();
 
     setLoading(false);
+
     homeResult.when(
       success: (data) {
         allCategories.assignAll(data);
@@ -61,4 +68,41 @@ class HomeController extends GetxController {
       },
     );
   }
+
+  Future<void> getAllProducts({bool canLoad = true}) async {
+    if (canLoad) {
+      setLoading(true, isProduct: true);
+    }
+
+    Map<String, dynamic> body = {
+      'page': currentCategory!.pagination,
+      'categoryId': currentCategory!.id,
+      'itemsPerPage': itemsPerPage,
+    };
+
+    if (searchTitle.value.isNotEmpty) {
+      body['title'] = searchTitle.value;
+
+      if (currentCategory!.id == '') {
+        body.remove('categoryId');
+      }
+    }
+
+    HomeResult<ItemModel> result = await homeRespository.getAllProducts(body);
+
+    setLoading(false, isProduct: true);
+
+    result.when(
+      success: (data) {
+        currentCategory!.items.addAll(data);
+      },
+      error: (message) {
+        utilsServices.showToast(
+          message: message,
+          isError: true,
+        );
+      },
+    );
+  }
+
 }
