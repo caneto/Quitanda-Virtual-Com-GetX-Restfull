@@ -19,6 +19,11 @@ class HomeController extends GetxController {
 
   RxString searchTitle = ''.obs;
 
+  bool get isLastPage {
+    if (currentCategory!.items.length < itemsPerPage) return true;
+    return currentCategory!.pagination * itemsPerPage > allProducts.length;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -67,6 +72,12 @@ class HomeController extends GetxController {
         );
       },
     );
+  }
+
+  void loadMoreProducts() {
+    currentCategory!.pagination++;
+
+    getAllProducts(canLoad: false);
   }
 
   Future<void> getAllProducts({bool canLoad = true}) async {
