@@ -5,11 +5,11 @@ class CustomTextField extends StatefulWidget {
   final IconData icon;
   final String label;
   final bool isSecret;
-  final List<TextInputFormatter>? inputFormatter;
+  final List<TextInputFormatter>? inputFormatters;
   final String? initialValue;
   final bool readOnly;
   final String? Function(String?)? validator;
-  final void Function(String?)? onSave;
+  final void Function(String?)? onSaved;
   final TextEditingController? controller;
   final TextInputType? textInputType;
   final GlobalKey<FormFieldState>? formFieldKey;
@@ -19,14 +19,14 @@ class CustomTextField extends StatefulWidget {
     required this.icon,
     required this.label,
     this.isSecret = false,
-    this.inputFormatter,
+    this.inputFormatters,
     this.initialValue,
     this.readOnly = false,
-    this.controller,
-    this.onSave,
     this.validator,
+    this.onSaved,
+    this.controller,
     this.textInputType,
-    this.formFieldKey
+    this.formFieldKey,
   }) : super(key: key);
 
   @override
@@ -46,36 +46,37 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15.0),
+      padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
-          key: widget.formFieldKey,
-          controller: widget.controller,
-          readOnly: widget.readOnly,
-          initialValue: widget.initialValue,
-          inputFormatters: widget.inputFormatter,
-          obscureText: isObscure,
-          validator: widget.validator,
-          keyboardType: widget.textInputType,
-          onSaved: widget.onSave,
-          decoration: InputDecoration(
-            prefixIcon: Icon(widget.icon),
-            suffixIcon: widget.isSecret
-                ? IconButton(
-                    icon: Icon(
-                        isObscure ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        isObscure = !isObscure;
-                      });
-                    },
-                  )
-                : null,
-            labelText: widget.label,
-            isDense: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-            ),
-          )),
+        key: widget.formFieldKey,
+        controller: widget.controller,
+        readOnly: widget.readOnly,
+        initialValue: widget.initialValue,
+        inputFormatters: widget.inputFormatters,
+        obscureText: isObscure,
+        validator: widget.validator,
+        onSaved: widget.onSaved,
+        keyboardType: widget.textInputType,
+        decoration: InputDecoration(
+          prefixIcon: Icon(widget.icon),
+          suffixIcon: widget.isSecret
+              ? IconButton(
+            onPressed: () {
+              setState(() {
+                isObscure = !isObscure;
+              });
+            },
+            icon:
+            Icon(isObscure ? Icons.visibility : Icons.visibility_off),
+          )
+              : null,
+          labelText: widget.label,
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+        ),
+      ),
     );
   }
 }
