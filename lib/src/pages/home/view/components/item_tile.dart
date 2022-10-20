@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quitandavirtual/src/config/custom_colors.dart';
 import 'package:quitandavirtual/src/models/item_model.dart';
-import 'package:quitandavirtual/src/pages/product/product_screen.dart';
+import 'package:quitandavirtual/src/pages/cart/controller/cart_controller.dart';
+import 'package:quitandavirtual/src/pages_route/app_pages.dart';
 import 'package:quitandavirtual/src/utils/utils_services.dart';
 
 class ItemTile extends StatefulWidget {
   final ItemModel item;
   final void Function(GlobalKey) cartAnimationMethod;
 
-  ItemTile({
+  const ItemTile({
     Key? key,
     required this.item,
     required this.cartAnimationMethod,
   }) : super(key: key);
-
 
   @override
   State<ItemTile> createState() => _ItemTileState();
 }
 
 class _ItemTileState extends State<ItemTile> {
-  UtilsServices utils = UtilsServices();
-
   final GlobalKey imageGk = GlobalKey();
 
+  final UtilsServices utilsServices = UtilsServices();
+  final cartController = Get.find<CartController>();
+
   IconData tileIcon = Icons.add_shopping_cart_outlined;
-  //Icons.shopping_bag_outlined,
 
   Future<void> switchIcon() async {
     setState(() => tileIcon = Icons.check);
@@ -37,29 +38,34 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // Conteúdo
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (c) {
-              return ProductScreen(item: widget.item);
-            }));
+            Get.toNamed(PagesRoutes.productRoute, arguments: widget.item);
           },
           child: Card(
             elevation: 1,
             shadowColor: Colors.grey.shade300,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Hero(
-                    tag: widget.item.imgUrl,
-                    child: Image.network(
-                      widget.item.imgUrl,
-                      key: imageGk,
+                  // Imagem
+                  Expanded(
+                    child: Hero(
+                      tag: widget.item.imgUrl,
+                      child: Image.network(
+                        widget.item.imgUrl,
+                        key: imageGk,
+                      ),
                     ),
                   ),
+
+                  // Nome
                   Text(
                     widget.item.itemName,
                     style: const TextStyle(
@@ -67,21 +73,25 @@ class _ItemTileState extends State<ItemTile> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
+                  // Preço - Unidade
                   Row(
                     children: [
                       Text(
-                        utils.priceToCurrency(widget.item.price),
+                        utilsServices.priceToCurrency(widget.item.price),
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: CustomColors.customSwatchColor),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: CustomColors.customSwatchColor,
+                        ),
                       ),
                       Text(
                         '/${widget.item.unit}',
                         style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade500),
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -90,26 +100,30 @@ class _ItemTileState extends State<ItemTile> {
             ),
           ),
         ),
+
+        // Botão add carrinho
         Positioned(
           top: 4,
           right: 4,
           child: ClipRRect(
-           borderRadius: const BorderRadius.only(
-             bottomLeft: Radius.circular(15),
-             topRight: Radius.circular(20)
-           ),
-           child: Material (
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              topRight: Radius.circular(20),
+            ),
+            child: Material(
               child: InkWell(
                 onTap: () {
                   switchIcon();
 
+                  cartController.addItemToCart(item: widget.item);
+
                   widget.cartAnimationMethod(imageGk);
                 },
                 child: Ink(
-                  height: 48,
+                  height: 40,
                   width: 35,
                   decoration: BoxDecoration(
-                      color: CustomColors.customSwatchColor,
+                    color: CustomColors.customSwatchColor,
                   ),
                   child: Icon(
                     tileIcon,
@@ -120,8 +134,8 @@ class _ItemTileState extends State<ItemTile> {
               ),
             ),
           ),
-         )
-       ],
+        ),
+      ],
     );
   }
 }

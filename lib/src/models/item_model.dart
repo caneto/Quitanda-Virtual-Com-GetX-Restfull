@@ -5,7 +5,7 @@ part 'item_model.g.dart';
 
 @JsonSerializable()
 class ItemModel {
-  String? id;
+  String id;
 
   @JsonKey(name: 'title')
   String itemName;
@@ -18,7 +18,7 @@ class ItemModel {
   String description;
 
   ItemModel({
-    this.id,
+    this.id = '',
     required this.itemName,
     required this.imgUrl,
     required this.unit,
